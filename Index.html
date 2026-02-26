@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FTOUCHLINE_ID | Football Life 2026</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Syncopate:wght@400;700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'fl-red': '#ff0044',
+                        'fl-orange': '#ff5500',
+                        'fl-dark': '#050000',
+                        'fl-card': '#1a0505',
+                    },
+                    fontFamily: {
+                        'display': ['Teko', 'sans-serif'],
+                        'cyber': ['Syncopate', 'sans-serif'],
+                        'body': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { 
+            background-color: #050000; 
+            color: #f8fafc; 
+            font-family: 'Inter', sans-serif;
+            padding-bottom: 60px;
+        }
+        
+        .cyber-glow-red {
+            text-shadow: 0 0 20px rgba(255, 0, 68, 0.7);
+        }
+
+        #video-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(5, 0, 0, 0.98);
+            backdrop-filter: blur(15px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-fl-red {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(90deg, #ff0044, #ff5500);
+            transition: all 0.3s ease;
+        }
+
+        .btn-fl-red:hover {
+            box-shadow: 0 0 30px rgba(255, 0, 68, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .card-fl-red {
+            background: rgba(26, 5, 5, 0.4);
+            border: 1px solid rgba(255, 0, 68, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card-fl-red:hover {
+            border-color: rgba(255, 0, 68, 0.5);
+            transform: scale(1.01);
+            background: rgba(45, 10, 10, 0.6);
+        }
+
+        @keyframes scanline-red {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(1000%); }
+        }
+
+        .scanline-effect-red::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to bottom, transparent, rgba(255, 0, 68, 0.05), transparent);
+            height: 10px;
+            animation: scanline-red 4s linear infinite;
+            pointer-events: none;
+        }
+
+        .hero-pattern-red {
+            background-image: radial-gradient(circle at 2px 2px, rgba(255, 0, 68, 0.05) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .marquee-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 30s linear infinite;
+        }
+
+        .aspect-shorts {
+            aspect-ratio: 9 / 16;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-fl-red selection:text-white">
+
+    <!-- RUNNING TEXT -->
+    <div class="fixed bottom-0 left-0 w-full bg-fl-red text-white py-1.5 z-[100] border-t border-fl-orange/30 overflow-hidden flex items-center shadow-[0_-10px_20px_rgba(255,0,68,0.2)]">
+        <div class="bg-black text-fl-red px-4 py-1 font-cyber text-[10px] font-bold z-10 skew-x-[-20deg] ml-[-10px] border-r-2 border-fl-red">
+            <span class="block skew-x-[20deg]">UPDATE</span>
+        </div>
+        <div class="marquee-content font-cyber text-[11px] tracking-widest uppercase">
+            <span class="mx-8 underline">LATEST: MASTER LEAGUE SEASON 2 EPISODE 24 SEKARANG TERSEDIA DI @PPutPra</span>
+            <span class="mx-8">•</span>
+            <span class="mx-8 underline">TIKTOK: CEK SKILL MOVE TERBARU UNTUK FOOTBALL LIFE 26</span>
+            <span class="mx-8">•</span>
+            <span class="mx-8 underline">INFO: MOD UPDATE PATCH VERSION 2.1 SUDAH BISA DI-DOWNLOAD</span>
+            <span class="mx-8">•</span>
+            <span class="mx-8 underline">FOLLOW DISCORD UNTUK KOMUNITAS FTOUCHLINE_ID</span>
+        </div>
+    </div>
+
+    <!-- VIDEO MODAL -->
+    <div id="video-modal" onclick="closeVideo()">
+        <button class="absolute top-8 right-8 text-fl-red text-4xl hover:scale-125 transition-all">
+            <i class="fa-solid fa-circle-xmark"></i>
+        </button>
+        <div class="w-full max-w-5xl aspect-video shadow-[0_0_50px_rgba(255,0,68,0.3)] border border-fl-red/20" onclick="event.stopPropagation()">
+            <iframe id="yt-iframe" class="w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full z-50 px-6 py-6 transition-all duration-300" id="main-nav">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="font-cyber text-xl md:text-2xl tracking-tighter flex items-center gap-2">
+                <span class="text-fl-red">FTOUCHLINE</span><span class="text-white opacity-80 italic">ID</span>
+            </a>
+            
+            <div class="hidden md:flex items-center space-x-12 font-display text-2xl tracking-widest">
+                <a href="#master-league" class="hover:text-fl-red transition-all">MASTER LEAGUE</a>
+                <a href="#shorts" class="hover:text-fl-red transition-all">SHORTS</a>
+                <a href="https://www.youtube.com/@PPutPra" target="_blank" class="btn-fl-red px-8 py-1 rounded-full text-white font-bold text-xl uppercase italic">
+                    SUBSCRIBE
+                </a>
+            </div>
+            
+            <button class="md:hidden text-fl-red text-2xl"><i class="fa-solid fa-bars-staggered"></i></button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="relative min-h-screen flex items-center overflow-hidden scanline-effect-red hero-pattern-red">
+        <div class="absolute inset-0 bg-gradient-to-b from-fl-dark via-fl-dark/95 to-fl-dark z-1"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <div class="max-w-5xl mx-auto">
+                <div class="flex items-center justify-center gap-4 mb-8">
+                    <span class="h-[1px] w-12 bg-fl-red/50"></span>
+                    <span class="font-cyber text-fl-red text-[10px] tracking-[0.6em] uppercase">Season 2026 Simulation</span>
+                    <span class="h-[1px] w-12 bg-fl-red/50"></span>
+                </div>
+                
+                <h1 class="text-6xl md:text-8xl lg:text-9xl font-cyber font-bold leading-tight mb-10">
+                    THE NEXT <br> <span class="text-transparent bg-clip-text bg-linear-to-r from-fl-red to-fl-orange cyber-glow-red italic">EVOLUTION.</span>
+                </h1>
+                
+                <p class="text-xl md:text-2xl text-gray-400 font-light mb-16 max-w-2xl mx-auto leading-relaxed italic">
+                    Visualisasi cerita Master League dengan standar baru. Taklukkan Eropa dengan taktik modern di **Football Life 2026**.
+                </p>
+
+                <div class="flex flex-wrap justify-center gap-8">
+                    <button onclick="openVideo('d4vGWhWu7x0')" class="btn-fl-red px-14 py-6 text-white font-cyber font-bold text-sm tracking-[0.2em] uppercase rounded-sm">
+                        <i class="fa-solid fa-play mr-3"></i> Watch Episode 24
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FULL GAMEPLAY SECTION -->
+    <section id="master-league" class="py-24 relative bg-fl-dark">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                <div>
+                    <h2 class="text-4xl md:text-6xl font-cyber font-bold text-white mb-4 italic">FULL <span class="text-fl-red">GAMEPLAY</span></h2>
+                    <p class="text-fl-red font-mono text-xs tracking-[0.3em] uppercase">>> MAIN SERIES: ROAD TO GLORY</p>
+                </div>
+            </div>
+
+            <!-- FEATURED VIDEO -->
+            <div class="mb-16">
+                <div class="card-fl-red rounded-lg overflow-hidden border-2 border-fl-red/20 shadow-[0_0_40px_rgba(255,0,68,0.1)]">
+                    <div class="grid grid-cols-1 lg:grid-cols-3">
+                        <div class="lg:col-span-2 relative aspect-video bg-black group cursor-pointer" onclick="openVideo('d4vGWhWu7x0')">
+                            <img src="https://img.youtube.com/vi/d4vGWhWu7x0/maxresdefault.jpg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500" alt="Thumbnail Episode 24">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-20 h-20 bg-fl-red rounded-full flex items-center justify-center text-white text-2xl shadow-[0_0_30px_rgba(255,0,68,0.6)] group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-play ml-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-8 lg:p-12 flex flex-col justify-center">
+                            <div class="inline-block bg-fl-red text-white text-[10px] font-cyber px-3 py-1 mb-6 self-start tracking-tighter">LATEST UPLOAD</div>
+                            <h3 class="text-4xl font-display font-bold mb-4 italic text-white leading-none tracking-tight uppercase">PERBURUAN GELAR PREMIER LEAGUE 2026</h3>
+                            <div class="flex items-center gap-4 mb-6 text-gray-500 text-sm font-mono uppercase tracking-widest">
+                                <span>EPISODE 24</span>
+                                <span class="w-1 h-1 bg-fl-red rounded-full"></span>
+                                <span>SEASON 2</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-8 italic">
+                                Ketegangan memuncak di Emirates Stadium. Arsenal harus menghadapi rotasi skuad yang ekstrem di tengah jadwal Boxing Day yang gila.
+                            </p>
+                            <a href="https://www.youtube.com/watch?v=d4vGWhWu7x0" target="_blank" class="flex items-center text-fl-red font-cyber text-sm tracking-[0.2em] hover:text-white transition-all uppercase">
+                                LIHAT DI YOUTUBE <i class="fa-solid fa-arrow-up-right-from-square ml-3"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Koleksi Video Lainnya -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="card-fl-red group rounded-sm p-4 cursor-pointer flex flex-col sm:flex-row gap-6" onclick="openVideo('6vK9L9M_7lE')">
+                    <div class="relative w-full sm:w-1/2 aspect-video overflow-hidden border border-white/5 bg-black">
+                        <img src="https://img.youtube.com/vi/6vK9L9M_7lE/maxresdefault.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Thumbnail Episode 23">
+                        <div class="absolute inset-0 bg-fl-red/10 group-hover:bg-transparent transition-all"></div>
+                        <div class="absolute bottom-2 right-2 bg-black/80 px-2 py-1 text-[10px] text-white">EPISODE 23</div>
+                    </div>
+                    <div class="w-full sm:w-1/2 flex flex-col justify-center">
+                        <div class="text-fl-red text-[10px] font-cyber mb-2">MASTER LEAGUE</div>
+                        <h3 class="text-2xl font-display font-bold mb-3 group-hover:text-fl-red transition-colors italic leading-none uppercase">UJIAN BERAT DI OLD TRAFFORD</h3>
+                    </div>
+                </div>
+
+                <div class="card-fl-red group rounded-sm p-4 cursor-pointer flex flex-col sm:flex-row gap-6" onclick="openVideo('8KqM8fF7XGk')">
+                    <div class="relative w-full sm:w-1/2 aspect-video overflow-hidden border border-white/5 bg-black">
+                        <img src="https://img.youtube.com/vi/8KqM8fF7XGk/maxresdefault.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Thumbnail Episode 22">
+                        <div class="absolute inset-0 bg-fl-red/10 group-hover:bg-transparent transition-all"></div>
+                        <div class="absolute bottom-2 right-2 bg-black/80 px-2 py-1 text-[10px] text-white">EPISODE 22</div>
+                    </div>
+                    <div class="w-full sm:w-1/2 flex flex-col justify-center">
+                        <div class="text-fl-red text-[10px] font-cyber mb-2">MASTER LEAGUE</div>
+                        <h3 class="text-2xl font-display font-bold mb-3 group-hover:text-fl-red transition-colors italic leading-none uppercase">DOMINASI CHAMPIONS LEAGUE</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SHORTS SECTION -->
+    <section id="shorts" class="py-24 relative bg-fl-dark overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="mb-12">
+                <h2 class="text-4xl md:text-6xl font-cyber font-bold text-white mb-2 italic">LATEST <span class="text-fl-red">SHORTS</span></h2>
+                <p class="text-fl-red font-mono text-[10px] tracking-[0.4em] uppercase">>> VERTICAL CONTENT: SKILLS & MOMENTS</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+                <!-- Short 1 -->
+                <div class="group cursor-pointer" onclick="openVideo('dQw4w9WgXcQ')">
+                    <div class="relative aspect-shorts rounded-lg overflow-hidden border border-fl-red/20 card-fl-red">
+                        <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" alt="Short Skill">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <div class="text-[10px] font-cyber text-fl-red mb-1">SKILLS</div>
+                            <h4 class="text-lg font-display font-bold text-white leading-none uppercase italic">INSANE DRIBBLE</h4>
+                        </div>
+                        <div class="absolute top-4 right-4 text-white/50"><i class="fa-solid fa-bolt"></i></div>
+                    </div>
+                </div>
+
+                <!-- Short 2 -->
+                <div class="group cursor-pointer" onclick="openVideo('dQw4w9WgXcQ')">
+                    <div class="relative aspect-shorts rounded-lg overflow-hidden border border-fl-red/20 card-fl-red">
+                        <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" alt="Short Goal">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <div class="text-[10px] font-cyber text-fl-red mb-1">GOALS</div>
+                            <h4 class="text-lg font-display font-bold text-white leading-none uppercase italic">POWER SHOT</h4>
+                        </div>
+                        <div class="absolute top-4 right-4 text-white/50"><i class="fa-solid fa-bolt"></i></div>
+                    </div>
+                </div>
+
+                <!-- Short 3 -->
+                <div class="group cursor-pointer" onclick="openVideo('dQw4w9WgXcQ')">
+                    <div class="relative aspect-shorts rounded-lg overflow-hidden border border-fl-red/20 card-fl-red">
+                        <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" alt="Short Tactical">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <div class="text-[10px] font-cyber text-fl-red mb-1">TACTICS</div>
+                            <h4 class="text-lg font-display font-bold text-white leading-none uppercase italic">QUICK TRANSITION</h4>
+                        </div>
+                        <div class="absolute top-4 right-4 text-white/50"><i class="fa-solid fa-bolt"></i></div>
+                    </div>
+                </div>
+
+                <!-- Short 4 -->
+                <div class="group cursor-pointer" onclick="openVideo('dQw4w9WgXcQ')">
+                    <div class="relative aspect-shorts rounded-lg overflow-hidden border border-fl-red/20 card-fl-red">
+                        <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" alt="Short Save">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <div class="text-[10px] font-cyber text-fl-red mb-1">SAVES</div>
+                            <h4 class="text-lg font-display font-bold text-white leading-none uppercase italic">REFLEX GOALIE</h4>
+                        </div>
+                        <div class="absolute top-4 right-4 text-white/50"><i class="fa-solid fa-bolt"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-20 bg-fl-dark border-t border-fl-red/20">
+        <div class="container mx-auto px-6 text-center md:text-left">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-16">
+                <div>
+                    <h2 class="font-cyber text-3xl mb-3 text-white tracking-tighter">FTOUCHLINE<span class="text-fl-red italic">ID</span></h2>
+                </div>
+                
+                <div class="flex gap-10">
+                    <a href="https://www.youtube.com/@PPutPra" target="_blank" class="text-3xl text-gray-600 hover:text-fl-red transition-all"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" class="text-3xl text-gray-600 hover:text-fl-red transition-all"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="#" class="text-3xl text-gray-600 hover:text-fl-red transition-all"><i class="fa-brands fa-discord"></i></a>
+                </div>
+                
+                <div class="text-gray-700 text-[8px] font-cyber tracking-[0.4em] uppercase">
+                    &copy; 2026 FTOUCHLINE_ID. ALL SYSTEM OPERATIONAL.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const modal = document.getElementById('video-modal');
+        const iframe = document.getElementById('yt-iframe');
+        const nav = document.getElementById('main-nav');
+
+        function openVideo(id) {
+            iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&modestbranding=1&rel=0`;
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeVideo() {
+            modal.style.display = 'none';
+            iframe.src = '';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-fl-dark/95', 'backdrop-blur-xl', 'py-4', 'border-b', 'border-fl-red/10');
+            } else {
+                nav.classList.remove('bg-fl-dark/95', 'backdrop-blur-xl', 'py-4', 'border-b', 'border-fl-red/10');
+            }
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeVideo();
+        });
+    </script>
+</body>
+</html>
